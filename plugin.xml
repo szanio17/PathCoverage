@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension point="org.eclipse.core.resources.markers"
+      id="codecoverage.markers.marker"
+      name="Code">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <super type="org.eclipse.core.resources.marker"/>
+      <persistent value="true"/>
+	</extension> 
+	<extension point="org.eclipse.core.resources.markers"
+      id="codecoverage.markers.markerthrow"
+      name="Code Throw">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <super type="org.eclipse.core.resources.marker"/>
+      <persistent value="true"/>
+	</extension> 
+	<extension point="org.eclipse.core.resources.markers"
+      id="codecoverage.markers.markerbranch"
+      name="Code branch">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <super type="org.eclipse.core.resources.marker"/>
+      <persistent value="true"/>
+	</extension> 
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification"
+     id="myannotationspecification"
+     name="MyAnnotation">
+	     <specification
+	          annotationType="codecoverage.myannotationbad"
+	          label="CoverageAnotation_Throw"
+	          icon="icons/simpleCode.gif"
+	          overviewRulerPreferenceKey="cabruler"
+	          overviewRulerPreferenceValue="true"
+	          colorPreferenceKey="cabcolor"
+	          colorPreferenceValue="255,135,135"
+	          highlightPreferenceKey="partialcoverage_highlight"
+	          highlightPreferenceValue="true"
+	          textPreferenceKey="cabtext"
+	          textPreferenceValue="true"
+	          verticalRulerPreferenceKey="cabvertical"
+	          verticalRulerPreferenceValue="true"
+	          textStylePreferenceKey="cabstyle"
+	          textStylePreferenceValue="BOX">
+	    </specification>
+	     <specification
+	          annotationType="codecoverage.myannotation"
+	          label="CoverageAnotation"
+	          icon="icons/simpleCode.gif"
+	          overviewRulerPreferenceKey="caruler"
+	          overviewRulerPreferenceValue="true"
+	          colorPreferenceKey="cacolor"
+	          colorPreferenceValue="165,255,167"
+	          highlightPreferenceKey="partialcoverage_highlight"
+	          highlightPreferenceValue="true"
+	          textPreferenceKey="catext"
+	          textPreferenceValue="true"
+	          verticalRulerPreferenceKey="cavertical"
+	          verticalRulerPreferenceValue="true"
+	          textStylePreferenceKey="castyle"
+	          textStylePreferenceValue="BOX">
+	    </specification>
+		     <specification
+	          annotationType="codecoverage.myannotationbranch"
+	          label="CoverageAnotation_Branch"
+	          icon="icons/loopCode.gif"
+	          overviewRulerPreferenceKey="cbruler"
+	          overviewRulerPreferenceValue="true"
+	          colorPreferenceKey="cbcolor"
+	          colorPreferenceValue="165,255,167"
+	          highlightPreferenceKey="partialcoverage_highlight"
+	          highlightPreferenceValue="true"
+	          textPreferenceKey="cbtext"
+	          textPreferenceValue="true"
+	          verticalRulerPreferenceKey="cbvertical"
+	          verticalRulerPreferenceValue="true"
+	          textStylePreferenceKey="cbstyle"
+	          textStylePreferenceValue="BOX">
+	    </specification>
+   	</extension>
+   	
+   	<extension point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerSeverity="0"
+            super="org.eclipse.ui.workbench.texteditor.info"
+            name="codecoverage.myannotation"
+            markerType="codecoverage.markers.marker"/>
+      <type
+            markerSeverity="0"
+            super="org.eclipse.ui.workbench.texteditor.info"
+            name="codecoverage.myannotationbad"
+            markerType="codecoverage.markers.markerthrow"/>
+   	</extension>
+   
+   	<extension point="org.eclipse.ui.editors.markerUpdaters">
+      <updater
+            id="codecoverage.MarkerUpdater"
+            class="codecoverage.annotations.MarkerUpdater"
+            markerType="codecoverage.markers.marker">
+      </updater>
+      <updater
+            id="codecoverage.MarkerUpdater"
+            class="codecoverage.annotations.MarkerUpdater"
+            markerType="codecoverage.markers.markerthrow">
+      </updater>
+      <updater
+            id="codecoverage.MarkerUpdater"
+            class="codecoverage.annotations.MarkerUpdater"
+            markerType="codecoverage.markers.markerbranch">
+      </updater>
+  	</extension>
+  	
+	<extension 
+		point="org.eclipse.ui.views">
+        <view id="codecoverage.view.coverageview"
+             name="Coverage view"
+          class="codecoverage.view.OwnView"
+          icon="icons\view.gif"/>
+  	</extension>
+  	
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="CodeCoverage.commands.sampleCommand"
+            class="codecoverage.handlers.ButtonsHandler">
+      </handler>
+      <handler
+            commandId="CodeCoverage.commands.runJUnit"
+            class="codecoverage.handlers.ButtonsHandler">
+      </handler>
+      <handler
+            commandId="runJUnit"
+            class="codecoverage.handlers.ButtonsHandler">
+      </handler>
+      <handler
+            commandId="runJUnitLast"
+            class="codecoverage.handlers.ButtonsHandler">
+      </handler>
+      <handler
+            commandId="codecoverage.removeannotation"
+            class="codecoverage.annotations.RemoveAnnotation">
+      </handler>
+      <handler
+            commandId="analysis"
+            class="codecoverage.handlers.ButtonsHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+	<menuContribution
+		locationURI="toolbar:codecoverage.view.coverageview">
+		<command
+	   		commandId="codecoverage.removeannotation"
+	   		defaultHandler="codecoverage.RemoveAnnotation"
+	   		icon="icons/delete.gif"
+	   		style="push">
+	 	</command>
+	</menuContribution>
+    <menuContribution 
+      		locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+        <toolbar id="my.Toolbar">
+        </toolbar>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:my.Toolbar?after=additions">
+            <command
+                  commandId="runJUnit"
+                  icon="icons/myIcon.gif"
+                  id="my.Toolbar.command1"
+                  style="pulldown"
+                  tooltip="Run JUnit(Current file)">
+            </command>
+		</menuContribution>
+      <menuContribution locationURI="menu:my.Toolbar.command1?after=additions">
+            <command
+                  commandId="runJUnitLast"
+                  mnemonic="S"
+                  label="Run last JUnit"
+                  id="my.Toolbar.menu.command3">
+            </command>
+            <command
+                  commandId="analysis"
+                  mnemonic="S"
+                  label="Print data"
+                  id="my.Toolbar.menu.command2">
+            </command>
+      	</menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+   </extension>
+
+</plugin>
