@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_BxaXACerEeWxCPrV0pAZQQ">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_BxaXACerEeWxCPrV0pAZQQ">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EI7oACerEeWxCPrV0pAZQQ" featurename="descriptors" parentElementId="xpath:/">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_KMklcCerEeWxCPrV0pAZQQ" elementId="test.partDescFragment.ASampleE4View" label="Path Coverage View" iconURI="platform:/plugin/codecoverage.ui/icons/Sample.png" tooltip="" category="Sample Category" contributionURI="bundleclass://codecoverage.ui/codecoverage.ui.parts.PathCoverageView">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KMklcCerEeWxCPrV0pAZQQ" elementId="test.partDescFragment.ASampleE4View" label="Coverage View" iconURI="platform:/plugin/codecoverage.ui/icons/Sample.png" tooltip="" category="Sample Category" contributionURI="bundleclass://codecoverage.ui/codecoverage.ui.parts.CoverageView">
       <tags>View</tags>
       <tags>categoryTag:Sample Category</tags>
+      <toolbar xmi:id="_I41OsAy0Eein5PH9mIbd9Q" elementId="codecoverage.ui.toolbar.1">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_ZXs04Ay0Eein5PH9mIbd9Q" elementId="codecoverage.ui.handledtoolitem.refresh" label="Refresh" iconURI="platform:/plugin/codecoverage.ui/icons/Sample.png" command="_kPblsAyvEein5PH9mIbd9Q"/>
+      </toolbar>
+    </elements>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_7CkasA19Eei74_E2ULYdfQ" elementId="codecoverage.ui.partdescriptor.pathcoverageview" label="Path CoverageView" iconURI="platform:/plugin/codecoverage.ui/icons/Sample.png" category="Sample Category" contributionURI="bundleclass://codecoverage.ui/codecoverage.ui.parts.PathCoverageView">
+      <tags>View</tags>
+      <tags>categoryTag:Sample Category</tags>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_4MqwgAtMEeidlMLNlTngLg" featurename="commands" parentElementId="xpath:/">
+    <elements xsi:type="commands:Command" xmi:id="_HowEAAtNEeidlMLNlTngLg" elementId="codecoverage.ui.command.runjunit" commandName="Run JUnit" description="Run JUnit test in current project"/>
+    <elements xsi:type="commands:Command" xmi:id="_kPblsAyvEein5PH9mIbd9Q" elementId="codecoverage.ui.command.refreshview" commandName="RefreshView" description="Refresh Path Coverage View"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_7zUuIAtMEeidlMLNlTngLg" featurename="handlers" parentElementId="xpath:/">
+    <elements xsi:type="commands:Handler" xmi:id="_SVt9AAtNEeidlMLNlTngLg" elementId="codecoverage.ui.handler.0" contributionURI="bundleclass://codecoverage.ui/codecoverage.ui.handlers.RunJunitHandler" command="_HowEAAtNEeidlMLNlTngLg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_iYQBoAyvEein5PH9mIbd9Q" elementId="codecoverage.ui.handler.1" contributionURI="bundleclass://codecoverage.ui/codecoverage.ui.handlers.RefreshViewHandler" command="_kPblsAyvEein5PH9mIbd9Q"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_7c2c8AtOEeidlMLNlTngLg" featurename="trimContributions" parentElementId="xpath:/">
+    <elements xsi:type="menu:TrimContribution" xmi:id="_DghYcAtPEeidlMLNlTngLg" elementId="codecoverage.ui.trimcontribution.0" parentId="org.eclipse.ui.main.toolbar">
+      <children xsi:type="menu:ToolBar" xmi:id="_Q1AGQAtPEeidlMLNlTngLg" elementId="codecoverage.ui.toolbar.0">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_S_r1IAtPEeidlMLNlTngLg" elementId="codecoverage.ui.handledtoolitem.runjunit" label="Run JUnit" iconURI="platform:/plugin/codecoverage.ui/icons/Sample.png" command="_HowEAAtNEeidlMLNlTngLg">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PE71kAv5EeiCt6dRbTxvMg" coreExpressionId="org.eclipse.ant.ui.activeAntEditor"/>
+        </children>
+      </children>
     </elements>
   </fragments>
 </fragment:ModelFragments>
