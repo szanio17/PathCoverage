@@ -63,7 +63,7 @@ public class ProjectParser {
 		IWorkbenchWindow window2 = wb.getActiveWorkbenchWindow();
 		return window2.getActivePage();
 	}
-	
+
 	public static IFile getFileOfClass(IWorkspaceRoot root, IJavaProject jp, String className) {
 		IType classType = null;
 		try {
@@ -81,7 +81,7 @@ public class ProjectParser {
 		}
 		return root.getFileForLocation(r2.getLocation());
 	}
-	
+
 	public static boolean openEditorOfGivenProject(String className, String javaProject) {
 		IWorkbenchPage page = getCurrentWorkbenchPage();
 
@@ -89,7 +89,7 @@ public class ProjectParser {
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project = root.getProject(javaProject);
 		IJavaProject jp = JavaCore.create(project);
-		
+
 		IFile f2 = getFileOfClass(root, jp, className);
 		if (f2 == null) {
 			return false;
@@ -102,19 +102,19 @@ public class ProjectParser {
 		}
 		return true;
 	}
-	
-	public static boolean openEditorOfCurrentProject(String className,ExecutionEvent event) {
+
+	public static boolean openEditorOfCurrentProject(String className, ExecutionEvent event) {
 		IWorkbenchPage page = getCurrentWorkbenchPage();
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IJavaProject jp = ProjectParser.getCurrentJavaProject(event);
-		
+
 		IFile f2 = getFileOfClass(root, jp, className);
 		if (f2 == null) {
 			return false;
 		}
-		
+
 		IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(f2.getName());
 		try {
 			page.openEditor(new FileEditorInput(f2), desc.getId());
@@ -206,6 +206,44 @@ public class ProjectParser {
 		return p;
 	}
 
+	public static IType findOpenCurrentClass(IJavaProject javaProj, IPath path, boolean isLast) {
+		String classPath = "";
+		IType p = null;
+		if (!isLast) {
+			List<IClasspathEntry> listOfCPE = getClassPathSources(javaProj);
+			String withoutLoc = path.toString().substring(javaProj.getProject().getLocation().toString().length() + 1);
+			System.out.println("witoutLoc:" + withoutLoc);
+			IClasspathEntry cpe = null;
+			for (IClasspathEntry tmp_cpe : listOfCPE) {
+				if (withoutLoc.startsWith(tmp_cpe.getPath().lastSegment())) {
+					cpe = tmp_cpe;
+				}
+			}
+			if (cpe == null) {
+				System.out.println("didnt find");
+				return null;
+			}
+			withoutLoc = withoutLoc.substring(cpe.getPath().lastSegment().length() + 1);
+			withoutLoc = withoutLoc.substring(0, withoutLoc.length() - 5);
+			withoutLoc = withoutLoc.replace("/", ".");
+
+			classPath = withoutLoc;
+		} else {
+			classPath = ProjectParser.lastClassPath;
+		}
+		if (classPath == null) {
+			return null;
+		}
+
+		try {
+			p = javaProj.findType(classPath);
+			tmpLastClassPath = classPath;
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+
 	private static IPath getCurrentFilePath() {
 		IWorkbench wb = PlatformUI.getWorkbench();
 		IWorkbenchWindow window2 = wb.getActiveWorkbenchWindow();
@@ -218,12 +256,12 @@ public class ProjectParser {
 	}
 
 	public static IJavaProject getCurrentJavaProject(ExecutionEvent event) {
-//		IWorkbench wb = PlatformUI.getWorkbench();
-//		IWorkbenchWindow window2 = wb.getActiveWorkbenchWindow();
-//		IWorkbenchPage page = window2.getActivePage();
-//		IEditorPart editorPart = page.getActiveEditor();
+		// IWorkbench wb = PlatformUI.getWorkbench();
+		// IWorkbenchWindow window2 = wb.getActiveWorkbenchWindow();
+		// IWorkbenchPage page = window2.getActivePage();
+		// IEditorPart editorPart = page.getActiveEditor();
 		IEditorPart editorPart = HandlerUtil.getActiveEditor(event);
-				
+
 		if (editorPart == null) {
 			return null;
 		}
@@ -235,4 +273,5 @@ public class ProjectParser {
 		// ... use activeProjectName
 		return JavaCore.create(activeProject);
 	}
+
 }

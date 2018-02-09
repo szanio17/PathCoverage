@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
-import codecoverage.view.Class;
 import codecoverage.view.Method;
 import codecoverage.view.OwnView;
 import codecoverage.view.Project;
@@ -125,6 +126,9 @@ public class CoveragePlugin {
 				@Override
 				public void run() {
 					ov.getM_treeViewer().setInput(listOfProjects);
+					Object service = PlatformUI.getWorkbench().getService(IEventBroker.class);
+					if (service instanceof IEventBroker)
+						((IEventBroker) service).post("refresh", "kero");
 				}
 			});
 		}
@@ -140,12 +144,12 @@ public class CoveragePlugin {
 
 	public static List<Project> getListOfProjects() {
 		if (listOfProjects == null) {
-			List<Project> list = new ArrayList<Project>();
-			Project p = new Project();
-			p.setName("No coverage found.");
-			Class[] c = new Class[0];
-			p.setClasses(c);
-			list.add(p);
+			List<Project> list = null;
+			// Project p = new Project();
+			// p.setName("No coverage found.");
+			// Class[] c = new Class[0];
+			// p.setClasses(c);
+			// list.add(p);
 			return list;
 		} else {
 			return listOfProjects;

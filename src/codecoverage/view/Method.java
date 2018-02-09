@@ -9,31 +9,32 @@ import codecoverage.coverage.LineCoverageInfo;
 public class Method {
 	private Class class1;
 	private String name;
-	//private List<Integer> pathCoverage;
+	// private List<Integer> pathCoverage;
 	private Map<Integer, List<Integer>> pathCoverages;
 	private Map<Integer, LineCoverageInfo> linesCoverage;
 	private int countOfCoverages = 0;
 	private int actualPathCoverages = 0;
 	private int maxPathCoverages = 0;
 	private int startLine = 0;
-	
+
 	public Method() {
 
 	}
-	
+
 	public void incCountOfCoverages() {
 		countOfCoverages++;
 		pathCoverages.put(countOfCoverages, new ArrayList<Integer>());
 	}
-	
+
 	public Class getClass1() {
 		return class1;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public String toString() {
 		return name;
 	}
@@ -45,7 +46,7 @@ public class Method {
 	public List<Integer> getPathCoverage(int numberOfCoverage) {
 		return pathCoverages.get(numberOfCoverage);
 	}
-	
+
 	public Map<Integer, LineCoverageInfo> getLinesCoverage() {
 		return linesCoverage;
 	}
@@ -65,7 +66,7 @@ public class Method {
 	public void setPathCoverages(Map<Integer, List<Integer>> pathCoverages) {
 		this.pathCoverages = pathCoverages;
 	}
-	
+
 	public List<Integer> getPathCoverage() {
 		return pathCoverages.get(countOfCoverages);
 	}
